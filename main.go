@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/GrayHat12/goslice/commons"
+	"github.com/GrayHat12/goslice/outofplace"
 )
 
 func testroutine(wg *sync.WaitGroup, ctx context.Context) {
@@ -52,4 +53,9 @@ func main() {
 		return &out
 	}, &reduced)
 	fmt.Printf("reduced=%+v\n", reduced)
+	mapped := outofplace.Map(list, func(v *int, _ int, _ *[]int) *string {
+		a := fmt.Sprintf("o%d", *v)
+		return &a
+	})
+	fmt.Printf("mapped=%+v\n", mapped)
 }

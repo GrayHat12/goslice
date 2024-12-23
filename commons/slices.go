@@ -60,6 +60,7 @@ func Every[T any](slice *[]T, predicate func(context.Context, *T, int, *[]T) boo
 			responses <- predicate(_ctx, item, index, array)
 		}
 	})
+	wg.Wait()
 	returnVal := true
 	responseIndex := 0
 	for response := range responses {
@@ -77,7 +78,6 @@ func Every[T any](slice *[]T, predicate func(context.Context, *T, int, *[]T) boo
 		}
 	}
 	cancel()
-	wg.Wait()
 	return returnVal
 }
 
